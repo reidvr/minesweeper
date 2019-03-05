@@ -23,7 +23,7 @@ function setMediumDifficulty(){
 
 function setHardDifficulty(){
   setDifficulty(6,6,5);
-}
+} 
 
 function setDifficulty(rows,cols,mines){
     document.querySelector('.board').innerHTML = '';
@@ -42,13 +42,21 @@ function setDifficulty(rows,cols,mines){
     for(var i = 0; i < rows; i++)
       for(var j = 0; j < cols; j++){
         cells.push(new Cell(i,j,setMine()));
+        
       }
-    board.cells = cells;
-    board.cells.forEach(el => countSurroundingMines(el));
-    lib.initBoard();
 
+    board.cells = cells;
+    board.cells.forEach(function(el){
+      countSurroundingMines(el);
+      
+    });
+    
+    lib.initBoard();
+    
    
 }
+
+
 function startGame () {
   
   document.addEventListener('click', checkForWin);
