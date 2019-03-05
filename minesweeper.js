@@ -11,19 +11,54 @@ function Cell(row,col,isMine) {
 }
 
 var board = {
-  cells:[
-    new Cell(0,0,true),new Cell(0,1,false),
-    new Cell(1,0,false),new Cell(1,1,false)
-    
-  ]
+  cells:[]
+};
+
+function setEasyDifficulty(){
+  setDifficulty(4,4,10);
+}
+function setMediumDifficulty(){
+  setDifficulty(5,5,15);
 }
 
+function setHardDifficulty(){
+  setDifficulty(6,6,5);
+}
+
+function setDifficulty(rows,cols,mines){
+    document.querySelector('.board').innerHTML = '';
+    var minesRemaining = mines, totalCells = rows * cols;
+    var mineChance = mines/totalCells;
+    var cells = [];
+
+    var setMine = function(){
+      if(minesRemaining)
+      {
+        return Math.random() > mineChance ? false : true;
+        minesRemaining--;
+      }
+    }
+
+    for(var i = 0; i < rows; i++)
+      for(var j = 0; j < cols; j++){
+        cells.push(new Cell(i,j,setMine()));
+      }
+    board.cells = cells;
+    board.cells.forEach(el => countSurroundingMines(el));
+    lib.initBoard();
+
+   
+}
 function startGame () {
-  board.cells.forEach(el => countSurroundingMines(el));
+  
   document.addEventListener('click', checkForWin);
   document.addEventListener('contextmenu', checkForWin);
+  document.querySelector('.easy-btn').addEventListener('click', setEasyDifficulty);
+  document.querySelector('.medium-btn').addEventListener('click', setMediumDifficulty);
+  document.querySelector('.hard-btn').addEventListener('click', setHardDifficulty);
+  
   // Don't remove this function call: it makes the game work!
-  lib.initBoard()
+  setEasyDifficulty();                                         
 }
 
 // Define this function to look for a win condition:
@@ -61,4 +96,6 @@ function countSurroundingMines (cell) {
 
 
 }
+
+
 
