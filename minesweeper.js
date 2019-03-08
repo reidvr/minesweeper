@@ -42,7 +42,7 @@ function setDifficulty(rows,cols,mines){
     for(var i = 0; i < rows; i++)
       for(var j = 0; j < cols; j++){
         cells.push(new Cell(i,j,setMine()));
-        
+
       }
 
     board.cells = cells;
@@ -99,9 +99,10 @@ function checkForWin () {
 // It will return cell objects in an array. You should loop through 
 // them, counting the number of times `cell.isMine` is true.
 function countSurroundingMines (cell) {
-  
-  cell.surroundingMines = lib.getSurroundingCells(cell.row,cell.col);
-
+  var nMines = 0;
+  var cells = lib.getSurroundingCells(cell.row,cell.col);
+  cells.forEach((el)=> el.isMine ? nMines++:0);
+ cell.surroundingMines = nMines;
 
 }
 

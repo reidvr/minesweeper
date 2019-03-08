@@ -40,9 +40,9 @@ body {
 }
 
 .buttons{
-  display: flex;
-  
+  display: flex;  
 }
+
 .board div:hover {
   background-color: white;
 }
